@@ -8,7 +8,6 @@ import Navigation from "./components/Navigation";
 import Products from "./components/Products";
 import ShoppingCart from "./components/ShoppingCart";
 
-
 function App() {
   const [products] = useState(data);
   const [cart, setCart] = useState([]);
@@ -17,9 +16,13 @@ function App() {
     setCart([...cart, item]);
   };
 
+  const removeItem = itemToBeRemoved => {
+    setCart(cart.filter(item => itemToBeRemoved !== item.id));
+  };
+
   return (
     <productContext.Provider value={{ products, addItem }}>
-      <cartContext.Provider value={{ cart, setCart }}>
+      <cartContext.Provider value={{ cart, removeItem }}>
         <div className="App">
           <Navigation />
 
@@ -27,7 +30,7 @@ function App() {
 
           <Route path="/cart" component={ShoppingCart} />
         </div>
-      </cartContext.Provider> 
+      </cartContext.Provider>
     </productContext.Provider>
   );
 }
